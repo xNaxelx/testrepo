@@ -8,19 +8,36 @@ public class Hand : MonoBehaviour
     private Camera _camera;
     private Vector3 _screenMousePosition = new Vector3();
     private Vector3 _InGameMousePosition = new Vector3();
+    [SerializeField]private uint _lootCount = 0;
+    private Rigidbody[] _lootStorage = new Rigidbody[1000];
 
-    void MoveHand()
+    private void MoveHand()
     {
         _screenMousePosition = _input.Action_Map.TapPosition.ReadValue<Vector2>();
         _screenMousePosition.z = 7; //рассто€ние от камеры до руки, пока хардкод, но нужно исправить
         _InGameMousePosition = _camera.ScreenToWorldPoint(_screenMousePosition);
-        Debug.Log(_screenMousePosition);
-        Debug.Log(_InGameMousePosition);
-        //Ёкономи€ ресурса на выделении буферного вектора, вместо этого используетс€ _InGameMousePosition
+
         _InGameMousePosition.y = gameObject.transform.position.y;
         _InGameMousePosition.z = gameObject.transform.position.z;
 
         gameObject.transform.position = _InGameMousePosition;
+    }
+
+    public void Grab(Rigidbody Loot)
+    {
+        _lootStorage[_lootCount] = Loot;
+        if(_lootCount == 0)
+        {
+            Loot.GetComponent<Loot>().previousGrabedElement = gameObject;
+        }
+        else
+        {
+            Loot.GetComponent<Loot>().previousGrabedElement = _lootStorage[_lootCount - 1].gameObject;
+        }
+        Loot.GetComponent<Loot>().Hand = gameObject;
+        Loot.GetComponent<Loot>().isKeaped = true;
+        _lootCount++;
+
     }
 
     private void Awake()
@@ -39,8 +56,15 @@ public class Hand : MonoBehaviour
         _input.Disable();
     }
 
- 
-    void Update()
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.GetComponent<Loot>() != null)
+        {
+            Grab(collision.rigidbody);
+        }
+    }
+
+    void FixedUpdate()
     {
         MoveHand(); 
     }

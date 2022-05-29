@@ -12,9 +12,11 @@ GameObject:
   - component: {fileID: 1871300910103174173}
   - component: {fileID: 2974955403298420928}
   - component: {fileID: 4362145456715950038}
+  - component: {fileID: -4687066840529794289}
+  - component: {fileID: 6401229633801620181}
   m_Layer: 0
-  m_Name: Sphere
-  m_TagString: Untagged
+  m_Name: Stone
+  m_TagString: Stone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,5 +97,42 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.4
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4687066840529794289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7141219228802652899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d5e33054e667b4b885159b46aba68d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material:
+  - {fileID: 2100000, guid: 272fcf7e553fc554388d1404309bdfc7, type: 2}
+  - {fileID: 2100000, guid: dcbeec243faba6840824cf6b4632efd0, type: 2}
+  - {fileID: 2100000, guid: 4fa07d15802729b44a092d769283e469, type: 2}
+  stage: 0
+  followSpeed: 45
+  _rb: {fileID: 6401229633801620181}
+  previousGrabedElement: {fileID: 0}
+  isKeaped: 0
+--- !u!54 &6401229633801620181
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7141219228802652899}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
