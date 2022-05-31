@@ -9,7 +9,7 @@ public class Hand : MonoBehaviour
     private Vector3 _screenMousePosition = new Vector3();
     private Vector3 _InGameMousePosition = new Vector3();
     [SerializeField]private uint _lootCount = 0;
-    private Rigidbody[] _lootStorage = new Rigidbody[1000];
+    [SerializeField]private Rigidbody[] _lootStorage = new Rigidbody[1000];
 
     private void MoveHand()
     {
@@ -25,19 +25,34 @@ public class Hand : MonoBehaviour
 
     public void Grab(Rigidbody Loot)
     {
+        for(int i = 0; i < _lootCount; i++)
+        {
+            if(Loot == _lootStorage[i])
+            {
+                return;
+            }
+        }
         _lootStorage[_lootCount] = Loot;
-        if(_lootCount == 0)
-        {
-            Loot.GetComponent<Loot>().previousGrabedElement = gameObject;
-        }
-        else
-        {
-            Loot.GetComponent<Loot>().previousGrabedElement = _lootStorage[_lootCount - 1].gameObject;
-        }
+        
+
         Loot.GetComponent<Loot>().Hand = gameObject;
         Loot.GetComponent<Loot>().isKeaped = true;
         _lootCount++;
+    }
 
+    private void MoveStone()
+    {
+        for(int i = 0; i < _lootCount; i++)
+        {
+            if(i == 0)
+            {
+                _lootStorage[i].gameObject.GetComponent<Loot>().Follow(gameObject);
+            }
+            else
+            {
+                _lootStorage[i].gameObject.GetComponent<Loot>().Follow(_lootStorage[i - 1].gameObject);
+            }
+        }
     }
 
     private void Awake()
@@ -66,6 +81,7 @@ public class Hand : MonoBehaviour
 
     void FixedUpdate()
     {
-        MoveHand(); 
+        MoveHand();
+        MoveStone();
     }
 }
