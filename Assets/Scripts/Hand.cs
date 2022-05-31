@@ -8,8 +8,8 @@ public class Hand : MonoBehaviour
     private Camera _camera;
     private Vector3 _screenMousePosition = new Vector3();
     private Vector3 _InGameMousePosition = new Vector3();
-    [SerializeField]private uint _lootCount = 0;
-    [SerializeField]private Rigidbody[] _lootStorage = new Rigidbody[1000];
+    private uint _lootCount = 0;
+    private Rigidbody[] _lootStorage = new Rigidbody[1000];
 
     private void MoveHand()
     {
@@ -33,10 +33,9 @@ public class Hand : MonoBehaviour
             }
         }
         _lootStorage[_lootCount] = Loot;
-        
 
-        Loot.GetComponent<Loot>().Hand = gameObject;
         Loot.GetComponent<Loot>().isKeaped = true;
+        Loot.GetComponent<Loot>().Hand = gameObject;
         _lootCount++;
     }
 
