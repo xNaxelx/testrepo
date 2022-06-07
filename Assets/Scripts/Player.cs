@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_move : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField]public float speed = 1;
+    [HideInInspector]public bool IsFinished = false;
     private Input_Controls _input;
     private bool _isGameStart = false;
     private Vector3 _positionBuffer;
@@ -37,7 +38,14 @@ public class Player_move : MonoBehaviour
     {
         if(_isGameStart)
         {
-            Move();
+            if(IsFinished == false)
+            {
+                Move();
+            }
+            else
+            {
+
+            }
         }
     }
 }

@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Hand : MonoBehaviour
 {
+    public uint lootCount = 0;
+    public bool isFinished = false;
     private Input_Controls _input;
     private Camera _camera;
     private Vector3 _screenMousePosition = new Vector3();
     private Vector3 _InGameMousePosition = new Vector3();
-    private uint _lootCount = 0;
-    private Rigidbody[] _lootStorage = new Rigidbody[1000];
+    [HideInInspector] public Rigidbody[] lootStorage = new Rigidbody[1000];
 
     private void MoveHand()
     {
@@ -25,31 +26,32 @@ public class Hand : MonoBehaviour
 
     public void Grab(Rigidbody Loot)
     {
-        for(int i = 0; i < _lootCount; i++)
+        for(int i = 0; i < lootCount; i++)
         {
-            if(Loot == _lootStorage[i])
+            if(Loot == lootStorage[i])
             {
                 return;
             }
         }
-        _lootStorage[_lootCount] = Loot;
+        lootStorage[lootCount] = Loot;
 
         Loot.GetComponent<Loot>().isKeaped = true;
-        Loot.GetComponent<Loot>().Hand = gameObject;
-        _lootCount++;
+        Loot.GetComponent<Loot>().hand = gameObject;
+        lootCount++;
+        Loot.GetComponent<Loot>().queueNumber = lootCount;
     }
 
     private void MoveStone()
     {
-        for(int i = 0; i < _lootCount; i++)
+        for(int i = 0; i < lootCount; i++)
         {
             if(i == 0)
             {
-                _lootStorage[i].gameObject.GetComponent<Loot>().Follow(gameObject);
+                lootStorage[i].gameObject.GetComponent<Loot>().Follow(gameObject);
             }
             else
             {
-                _lootStorage[i].gameObject.GetComponent<Loot>().Follow(_lootStorage[i - 1].gameObject);
+                lootStorage[i].gameObject.GetComponent<Loot>().Follow(lootStorage[i - 1].gameObject);
             }
         }
     }
@@ -80,7 +82,16 @@ public class Hand : MonoBehaviour
 
     void FixedUpdate()
     {
-        MoveHand();
+        if(isFinished == false)
+        {
+            MoveHand();
+        }
+        else
+        {
+            _InGameMousePosition.x = 0;
+            _InGameMousePosition.z = gameObject.transform.position.z; // если этой строки не будет, рука зависает в одном месте
+            gameObject.transform.position = _InGameMousePosition;
+        }
         MoveStone();
     }
 }
