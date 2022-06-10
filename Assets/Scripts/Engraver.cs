@@ -8,12 +8,7 @@ public class Engraver : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<Loot>() != null)
         {
-            if (collision.gameObject.GetComponent<Loot>().stage == 1)
-            {
-                collision.gameObject.GetComponent<MeshRenderer>().material = collision.gameObject.GetComponent<Loot>().material[2];
-                collision.gameObject.GetComponent<Loot>().stage = 2;
-                collision.gameObject.GetComponent<Loot>().cost += 10;
-            }
+            collision.gameObject.GetComponent<Loot>().IncreaseStage(1);
         }
     }
 }

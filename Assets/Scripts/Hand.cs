@@ -10,7 +10,7 @@ public class Hand : MonoBehaviour
     private Camera _camera;
     private Vector3 _screenMousePosition = new Vector3();
     private Vector3 _InGameMousePosition = new Vector3();
-    [HideInInspector] public Rigidbody[] lootStorage = new Rigidbody[1000];
+    [SerializeField] public Rigidbody[] lootStorage = new Rigidbody[1000];
 
     private void MoveHand()
     {
@@ -37,8 +37,8 @@ public class Hand : MonoBehaviour
 
         Loot.GetComponent<Loot>().isKeaped = true;
         Loot.GetComponent<Loot>().hand = gameObject;
+        Loot.GetComponent<Loot>().numberInStorage = lootCount;
         lootCount++;
-        Loot.GetComponent<Loot>().queueNumber = lootCount;
     }
 
     private void MoveStone()
@@ -54,6 +54,11 @@ public class Hand : MonoBehaviour
                 lootStorage[i].gameObject.GetComponent<Loot>().Follow(lootStorage[i - 1].gameObject);
             }
         }
+    }
+
+    public void Kostil(ref uint lootCount)
+    {
+        lootCount--;
     }
 
     private void Awake()

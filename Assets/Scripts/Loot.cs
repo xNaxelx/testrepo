@@ -1,20 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Loot : MonoBehaviour
 {
-    [SerializeField] public Material[] material;
     [SerializeField] public float followSpeed = 5;
-    [SerializeField] public Rigidbody _rb;
     [HideInInspector] public GameObject hand = null;
     [HideInInspector] public bool isKeaped = false;
-    [HideInInspector] public uint stage = 0;
-    [HideInInspector] public uint queueNumber;
+    [SerializeField] public uint numberInStorage;
     [HideInInspector] public uint cost = 10;
+    [SerializeField] private Rigidbody _rb;
+    [SerializeField] private Material[] _material;
+    private uint _stage = 0;
     private float _forceX;
     private Vector3 _forceVector3 = new Vector3();
     private Vector3 _transformBuffer = new Vector3();
+    
 
     public void Follow(GameObject previousGrabedElement)
     {
@@ -27,7 +26,25 @@ public class Loot : MonoBehaviour
         _forceVector3.x = _forceX * followSpeed;
         _rb.velocity = _forceVector3;
     }
-    
+
+    public void IncreaseStage(uint sourceStage)
+    {
+        if (_stage == sourceStage)
+        {
+            _stage++;
+            gameObject.GetComponent<MeshRenderer>().material = _material[_stage];
+            cost += 10;
+        }
+    }
+
+    public void TossTrap()
+    {
+        _rb.AddForce(Random.Range(0.5f, 2f), Random.Range(1f, 2.5f), Random.Range(-0.5f, 0.5f), ForceMode.VelocityChange);
+        hand = null;
+        hand.GetComponent<Hand>().lootStorage[numberInStorage] = null;
+        isKeaped = false;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if ((collision.gameObject.GetComponent<Loot>() != null) & isKeaped)
