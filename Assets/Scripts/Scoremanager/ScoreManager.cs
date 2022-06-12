@@ -19,8 +19,9 @@ namespace Assets.Scripts
 
         private void Awake()
         {
-            if (_instance != null)
+            if (_instance != null && _instance!=this)
             {
+                Debug.Log("Destroy",_instance.gameObject);
                 Destroy(this);
                 return;
             }
