@@ -1,17 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts;
 using UnityEngine;
 
 public class Finish : MonoBehaviour
 {
     private uint gettedValuse = 0;
-    private ScoreManager _scoreManager;
-
-    private void Awake()
-    {
-        _scoreManager = ScoreManager.GetInstance();
-    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.GetComponent<Loot>() != null)
@@ -28,7 +21,6 @@ public class Finish : MonoBehaviour
         {
             collision.gameObject.GetComponent<Player>().IsFinished = true;
             Debug.Log("Your getted valuse: " + gettedValuse);
-            _scoreManager.ChangePlayerBalance((int)gettedValuse);
         }
     }
 }
