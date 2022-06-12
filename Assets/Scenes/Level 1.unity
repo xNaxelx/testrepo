@@ -876,10 +876,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cd4a13f32650ed4d9207a8673cf88c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lootCount: 0
   isFinished: 0
-  lootStorage:
-  - {fileID: 0}
+  lootStorage: {fileID: 0}
 --- !u!54 &553106530
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3180,8 +3178,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2041352874}
-  - component: {fileID: 2041352873}
   - component: {fileID: 2041352875}
+  - component: {fileID: 2041352876}
   m_Layer: 0
   m_Name: ScoreManager
   m_TagString: Untagged
@@ -3189,20 +3187,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2041352873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2041352872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9111505e30edd645bbd18ddfcbbf02b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _priceIndicator: {fileID: 1465478653}
-  _playerScoreText: {fileID: 1984968350}
 --- !u!4 &2041352874
 Transform:
   m_ObjectHideFlags: 0
@@ -3232,6 +3216,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textField: {fileID: 2089726643}
+--- !u!114 &2041352876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041352872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9111505e30edd645bbd18ddfcbbf02b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _priceIndicator: {fileID: 1465478653}
+  _playerScoreText: {fileID: 1984968350}
 --- !u!1 &2089726642
 GameObject:
   m_ObjectHideFlags: 0
