@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Hand : MonoBehaviour
 {
+    public uint lootCount = 0;
     public bool isFinished = false;
-    public LootStorage lootStorage;
     private Input_Controls _input;
     private Camera _camera;
     private Vector3 _screenMousePosition = new Vector3();
     private Vector3 _InGameMousePosition = new Vector3();
+    [SerializeField] public Rigidbody[] lootStorage = new Rigidbody[1000];
 
     private void MoveHand()
     {
@@ -23,40 +24,47 @@ public class Hand : MonoBehaviour
         gameObject.transform.position = _InGameMousePosition;
     }
 
-    public void Grab(GameObject Loot)
+    public void Grab(Rigidbody Loot)
     {
-        for(uint i = 0; i < lootStorage.GetLootCount(); i++)
+        for(int i = 0; i < lootCount; i++)
         {
-            if(Loot == lootStorage.GetLootGO(i))
+            if(Loot == lootStorage[i])
             {
                 return;
             }
         }
-        lootStorage.SetLoot(Loot);
+        lootStorage[lootCount] = Loot;
 
+        Loot.GetComponent<Loot>().isKeaped = true;
         Loot.GetComponent<Loot>().hand = gameObject;
+        Loot.GetComponent<Loot>().numberInStorage = lootCount;
+        lootCount++;
     }
 
     private void MoveStone()
     {
-        for(uint i = 0; i < lootStorage.GetLootCount(); i++)
+        for(int i = 0; i < lootCount; i++)
         {
             if(i == 0)
             {
-                lootStorage.GetLootGO(i).GetComponent<Loot>().Follow(gameObject);
+                lootStorage[i].gameObject.GetComponent<Loot>().Follow(gameObject);
             }
             else
             {
-                lootStorage.GetLootGO(i).GetComponent<Loot>().Follow(lootStorage.GetLootGO(i - 1));
+                lootStorage[i].gameObject.GetComponent<Loot>().Follow(lootStorage[i - 1].gameObject);
             }
         }
+    }
+
+    public void Kostil(ref uint lootCount)
+    {
+        lootCount--;
     }
 
     private void Awake()
     {
         _input = new Input_Controls();
         _camera = Camera.main;
-        lootStorage = new LootStorage(100);
     }
 
     private void OnEnable()
@@ -73,7 +81,7 @@ public class Hand : MonoBehaviour
     {
         if(collision.gameObject.GetComponent<Loot>() != null)
         {
-            Grab(collision.gameObject);
+            Grab(collision.rigidbody);
         }
     }
 
