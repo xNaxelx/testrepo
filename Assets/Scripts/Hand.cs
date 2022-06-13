@@ -12,7 +12,7 @@ public class Hand : MonoBehaviour
     private Camera _camera;
     private Vector3 _screenMousePosition = new Vector3();
     private Vector3 _InGameMousePosition = new Vector3();
-    public float _onMousePress ;
+    private float _onMousePress ;
 
     private void Update()
     {
