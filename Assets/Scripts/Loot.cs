@@ -1,4 +1,3 @@
-using Assets.Scripts;
 using UnityEngine;
 
 public class Loot : MonoBehaviour
@@ -35,7 +34,6 @@ public class Loot : MonoBehaviour
             _stage++;
             gameObject.GetComponent<MeshRenderer>().material = _material[_stage];
             cost += 10;
-            ScoreManager.GetInstance().IndicateScoreChange(transform.position,10);
         }
     }
 
